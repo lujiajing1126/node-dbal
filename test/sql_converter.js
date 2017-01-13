@@ -20,6 +20,10 @@ describe('SQL Builder Tests',function(){
             var sql = builder.select().from('t_bill_order').where('account_id = %s').setParameter('1').toSQL();
             expect(sql.toLowerCase()).to.equal("SELECT * FROM `t_bill_order` WHERE account_id = '1'".toLowerCase());
         });
+        it('select with as',function(){
+            var sql = builder.select("SUM(`user`) as user_nums").from('t_bill_order').where('account_id = %s').setParameter('1').toSQL();
+            expect(sql.toLowerCase()).to.equal("SELECT SUM(`user`) as user_nums FROM `t_bill_order` WHERE account_id = '1'".toLowerCase());
+        });
         it('limit number test',function() {
             var sql = builder.select().from('t_bill_order').where('account_id = %d').setParameter(1).limit(5).toSQL();
             expect(sql.toLowerCase()).to.equal("SELECT * FROM `t_bill_order` WHERE account_id = 1 LIMIT 5".toLowerCase());
