@@ -7,13 +7,16 @@ var paths = {
     libs: './lib/**/*.js',
 };
 
-gulp.task('watch', function () {
-    gulp.watch([paths.libs], ['mocha-test']);
-});
+function watch() {
+    gulp.watch(paths.libs, mocha_test);
+};
 
-gulp.task('mocha-test', function () {
+function mocha_test() {
     return gulp.src('./test/*.js')
         .pipe(mocha());
-});
+};
 
-gulp.task('default', ['mocha-test', 'watch']);
+var build = gulp.series(watch, mocha_test);
+
+exports.test = mocha_test;
+exports.default = build;
